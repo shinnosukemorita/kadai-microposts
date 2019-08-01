@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\User; //　追加
+use App\User; //　追加ｍ
 
 class UsersController extends Controller
 {
@@ -60,5 +60,20 @@ class UsersController extends Controller
         $data += $this->counts($user);
 
         return view('users.followers', $data);
+    }
+    
+    public function show_favorites($id)
+    {
+        $user = User::find($id);
+        $favorites = $user->favorites()->paginate(10);
+
+        $data = [
+            'user' => $user,
+            'favorites' => $favorites,
+        ];
+
+        $data += $this->counts($user);
+
+        return view('users.favorites', $data);        
     }
 }
